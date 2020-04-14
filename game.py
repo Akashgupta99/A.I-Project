@@ -5,8 +5,8 @@ import time
 from os import system
 
 
-HUMAN = -1
-COMP = +1
+man = -1
+cpu = +1
 board = [
     [0, 0, 0],
     [0, 0, 0],
@@ -16,9 +16,9 @@ board = [
 
 def evaluate(state):
     
-    if wins(state, COMP):
+    if wins(state, cpu):
         score = +1
-    elif wins(state, HUMAN):
+    elif wins(state, man):
         score = -1
     else:
         score = 0
@@ -46,7 +46,7 @@ def wins(state, player):
 
 def game_over(state):
    
-    return wins(state, HUMAN) or wins(state, COMP)
+    return wins(state, man) or wins(state, cpu)
 
 
 def empty_cells(state):
@@ -122,10 +122,10 @@ def ai_turn(c_choice, h_choice):
         x = choice([0, 1, 2])
         y = choice([0, 1, 2])
     else:
-        move = minimax(board, depth, COMP)
+        move = minimax(board, depth, cpu)
         x, y = move[0], move[1]
 
-    set_move(x, y, COMP)
+    set_move(x, y, cpu)
     time.sleep(1)
 
 
@@ -151,7 +151,7 @@ def human_turn(c_choice, h_choice):
         try:
             move = int(input('Choose which place to put you mark (1,2,3,4,5,6,7,8,9): '))
             coord = moves[move]
-            can_move = set_move(coord[0], coord[1], HUMAN)
+            can_move = set_move(coord[0], coord[1], man)
 
             if not can_move:
                 print('Bad move')
@@ -164,7 +164,7 @@ def human_turn(c_choice, h_choice):
 
 def minimax(state, depth, player):
     
-    if player == COMP:
+    if player == cpu:
         best = [-1, -1, -infinity]
     else:
         best = [-1, -1, +infinity]
@@ -180,7 +180,7 @@ def minimax(state, depth, player):
         state[x][y] = 0
         score[0], score[1] = x, y
 
-        if player == COMP:
+        if player == cpu:
             if score[2] > best[2]:
                 best = score  # max value
         else:
@@ -235,12 +235,12 @@ def main():
         ai_turn(c_choice, h_choice)
 
     # Game over message
-    if wins(board, HUMAN):
+    if wins(board, man):
         clean()
         print(f'This is humans Turn [{h_choice}]')
         render(board, c_choice, h_choice)
         print('YOU WIN!')
-    elif wins(board, COMP):
+    elif wins(board, cpu):
         clean()
         print(f'This is turn for computer [{c_choice}]')
         render(board, c_choice, h_choice)
