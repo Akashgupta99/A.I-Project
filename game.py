@@ -135,7 +135,7 @@ def human_turn(c_choice, h_choice):
     if depth == 0 or game_over(board):
         return
 
-    # Dictionary of valid moves
+    
     move = -1
     moves = {
         1: [0, 0], 2: [0, 1], 3: [0, 2],
@@ -182,10 +182,10 @@ def minimax(state, depth, player):
 
         if player == cpu:
             if score[2] > best[2]:
-                best = score  # max value
+                best = score  
         else:
             if score[2] < best[2]:
-                best = score  # min value
+                best = score  
 
     return best
 
@@ -193,11 +193,11 @@ def minimax(state, depth, player):
 def main():
     
     clean()
-    h_choice = ''  # X or O
-    c_choice = ''  # X or O
-    first = ''  # if human is the first
+    h_choice = ''  
+    c_choice = ''  
+    first = ''  
 
-    # Human chooses X or O to play
+    
     while h_choice != 'O' and h_choice != 'X':
         try:
             print('')
@@ -208,13 +208,13 @@ def main():
         except (KeyError, ValueError):
             print('Bad choice')
 
-    # Setting computer's choice
+    
     if h_choice == 'X':
         c_choice = 'O'
     else:
         c_choice = 'X'
 
-    # Human may starts first
+    
     clean()
     while first != 'Y' and first != 'N':
         try:
@@ -225,7 +225,7 @@ def main():
         except (KeyError, ValueError):
             print('Bad choice')
 
-    # Main loop of this game
+    
     while len(empty_cells(board)) > 0 and not game_over(board):
         if first == 'N':
             ai_turn(c_choice, h_choice)
@@ -234,7 +234,7 @@ def main():
         human_turn(c_choice, h_choice)
         ai_turn(c_choice, h_choice)
 
-    # Game over message
+    
     if wins(board, man):
         clean()
         print(f'This is humans Turn [{h_choice}]')
